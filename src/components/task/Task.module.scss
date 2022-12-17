@@ -1,0 +1,25 @@
+.task {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  border-radius: 5px;
+  border: 1px solid darkgray;
+  margin: 5px;
+  align-items: center;
+  padding: 5px;
+  width: 100%;
+
+  .checked{
+    opacity: 0.5;
+  }
+
+  .editableSpan {
+    cursor: pointer;
+    width: 35%;
+  }
+}
+
+.checkedTask{
+  @extend .task;
+  opacity: 0.5;
+}
