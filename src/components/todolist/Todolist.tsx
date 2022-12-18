@@ -34,7 +34,7 @@ export const Todolist = React.memo(() => {
                     title={todosTitle}
                     changeTitle={changeTitle}/>
             </div>
-            <AddItemForm label={"Enter task title"} addItem={addTask}/>
+            <AddItemForm label={"Enter todo title"} addItem={addTask}/>
               {todos ? todos.map(todo =>
                     <Todo
                         key={todo._id}
