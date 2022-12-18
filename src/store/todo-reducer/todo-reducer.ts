@@ -85,7 +85,7 @@ const slice = createSlice({
     },
     reducers: {
         setTodos(state, action: PayloadAction<TodoType[]>) {
-            state.todos = action.payload
+            state.todos = action.payload.reverse()
         },
         setTodosTitle(state, action: PayloadAction<string>) {
             state.todosTitle = action.payload

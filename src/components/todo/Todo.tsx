@@ -1,29 +1,26 @@
-import React from "react";
-import {deleteTodoTC, updateTodoTC} from "../../store";
+import React, {useCallback} from "react";
+import {updateTodoTC} from "../../store";
 import {EditablSpan} from "../common/editablSpan/EditablSpan";
-import {Checkbox, IconButton} from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import s from "./Task.module.scss"
+import {Checkbox} from "@mui/material";
+import s from "./Todo.module.scss"
 import {useAppDispatch} from "../../hooks/hooks";
 import {TodoType} from "../../api";
 import {TodoImage} from "./todoImage/TodoImage";
+import {DeleteTodoModal} from "./deleteTodoModal/DeleteTodo.Modal";
 
 type PropsType = {
     todo: TodoType
 }
 
-export const Todo = ({todo: {status,name,description,_id}}: PropsType) => {
+export const Todo =React.memo( ({todo: {status,name,description,_id}}: PropsType) => {
     const dispatch = useAppDispatch()
 
     const handleCheckboxChange = () => {
         dispatch(updateTodoTC({id:_id, status:!status}))
     }
-    const handleDeleteClick = () => {
-        dispatch(deleteTodoTC(_id))
-    }
-    const changeTitle = (taskTitle: string) => {
+    const changeTitle =useCallback( (taskTitle: string) => {
         dispatch(updateTodoTC({id:_id, name:taskTitle}))
-    }
+    },[_id,dispatch])
 
     return (
         <div className={status ? s.checkedTask : s.task}>
@@ -37,9 +34,7 @@ export const Todo = ({todo: {status,name,description,_id}}: PropsType) => {
             </div>
             <TodoImage todoImage={description}
                        todoId={_id}/>
-            <IconButton onClick={handleDeleteClick}>
-                <DeleteIcon/>
-            </IconButton>
+            <DeleteTodoModal todoId={_id} todoName={name}/>
         </div>)
-}
+})
 

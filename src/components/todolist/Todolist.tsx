@@ -7,13 +7,14 @@ import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import {EditablSpan} from "../common/editablSpan/EditablSpan";
 import {setTodosTitle} from "../../store/todo-reducer";
 import {Todo} from "../todo/Todo";
+import {getTodos, getTodosTitle} from "../../selectors";
 
 
 export const Todolist = React.memo(() => {
 
     const dispatch = useAppDispatch()
-    const todos= useAppSelector(state => state.todo.todos)
-    const todosTitle= useAppSelector(state => state.todo.todosTitle)
+    const todos= useAppSelector(getTodos)
+    const todosTitle= useAppSelector(getTodosTitle)
 
     const changeTitle = (title: string) => {
         dispatch(setTodosTitle(title))
