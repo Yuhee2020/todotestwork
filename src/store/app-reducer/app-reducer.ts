@@ -12,8 +12,8 @@ const slice = createSlice({
         setAppStatus(state, action: PayloadAction<{ status: AppStatusType }>) {
             state.appStatus = action.payload.status
         },
-        setAppError(state, action: PayloadAction<{ error: null | string }>) {
-            state.error = action.payload.error
+        setAppError(state, action: PayloadAction<null | string>) {
+            state.error = action.payload
         },
     }
 })

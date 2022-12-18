@@ -1,1 +1,1 @@
-export {deleteTodoTC, addTodoTC, updateTodoTC, getTodosTC, setTodos, todoReducer} from "./todo-reducer"
+export {deleteTodoTC, addTodoTC, updateTodoTC, getTodosTC, setTodos,setTodosTitle, todoReducer} from "./todo-reducer"

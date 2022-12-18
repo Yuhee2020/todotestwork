@@ -1,46 +1,42 @@
 import React from "react";
-import {changeTaskStatus, changeTaskTitle, deleteTask} from "../../store/todolist-reducer";
+import {deleteTodoTC, updateTodoTC} from "../../store";
 import {EditablSpan} from "../common/editablSpan/EditablSpan";
 import {Checkbox, IconButton} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {TaskImage} from "./taskImage/TaskImage";
-import {Deadline} from "./deadline/Deadline";
 import s from "./Task.module.scss"
-import {TaskType} from "../../store/types";
 import {useAppDispatch} from "../../hooks/hooks";
+import {TodoType} from "../../api";
+import {TodoImage} from "./todoImage/TodoImage";
 
 type PropsType = {
-    task: TaskType
+    todo: TodoType
 }
 
-export const Task = ({task: {checked, taskId, taskImage, taskTitle, deadline}}: PropsType) => {
+export const Todo = ({todo: {status,name,description,_id}}: PropsType) => {
     const dispatch = useAppDispatch()
 
     const handleCheckboxChange = () => {
-        dispatch(changeTaskStatus({checked: !checked, taskId}))
+        dispatch(updateTodoTC({id:_id, status:!status}))
     }
     const handleDeleteClick = () => {
-        dispatch(deleteTask({taskId}))
+        dispatch(deleteTodoTC(_id))
     }
     const changeTitle = (taskTitle: string) => {
-        dispatch(changeTaskTitle({taskTitle, taskId}))
+        dispatch(updateTodoTC({id:_id, name:taskTitle}))
     }
 
     return (
-        <div className={checked ? s.checkedTask : s.task}>
+        <div className={status ? s.checkedTask : s.task}>
             <Checkbox
                 color={"success"}
                 onChange={handleCheckboxChange}
-                checked={checked}/>
+                checked={status}/>
             <div className={s.editableSpan}>
-                <EditablSpan title={taskTitle}
+                <EditablSpan title={name}
                              changeTitle={changeTitle}/>
             </div>
-            <Deadline
-                deadline={deadline ? deadline : ""}
-                taskId={taskId}/>
-            <TaskImage taskImage={taskImage}
-                       taskId={taskId}/>
+            <TodoImage todoImage={description}
+                       todoId={_id}/>
             <IconButton onClick={handleDeleteClick}>
                 <DeleteIcon/>
             </IconButton>

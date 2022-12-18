@@ -8,6 +8,10 @@ export type TodoType = {
     _id: string
 }
 
+export type GetTodosResponseType={
+    todos:TodoType[]
+}
+
 export type UpdatedTodoType={
     id: string
     name?:string

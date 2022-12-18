@@ -10,66 +10,66 @@ export const getTodosTC = createAsyncThunk("todo/getTodo", async (params, {
     dispatch(setAppStatus({status: "loading"}))
     try {
         const res = await todoAPI.getTodos()
-        return res.data
+        dispatch(setTodos(res.data.todos))
     } catch (err) {
         const error = err as AxiosError
-        dispatch(setAppError({error: error.message}))
+        dispatch(setAppError(error.message))
         return rejectWithValue(null)
     } finally {
         dispatch(setAppStatus({status: "idle"}))
     }
 })
 
-export const addTodoTC = createAsyncThunk("todo/addTodo", async (params:{name: string, descriptions: string},{
+export const addTodoTC = createAsyncThunk("todo/addTodo", async (name: string, {
     dispatch,
     rejectWithValue
 }) => {
     dispatch(setAppStatus({status: "loading"}))
     try {
-        const newTodo:NewTodoType={
-            name:params.name,
-            description:params.descriptions,
-            status:false
+        const newTodo: NewTodoType = {
+            name: name,
+            description: "no",
+            status: false
         }
         const res = await todoAPI.addTodo(newTodo)
-        dispatch(setTodos({todos:res.data.todos}))
+        dispatch(setTodos(res.data.todos))
     } catch (err) {
         const error = err as AxiosError
-        dispatch(setAppError({error: error.message}))
+        dispatch(setAppError(error.message))
         return rejectWithValue(null)
     } finally {
         dispatch(setAppStatus({status: "idle"}))
     }
 })
 
-export const deleteTodoTC = createAsyncThunk("todo/deleteTodo", async (id:string,{
+export const deleteTodoTC = createAsyncThunk("todo/deleteTodo", async (id: string, {
     dispatch,
     rejectWithValue
 }) => {
     dispatch(setAppStatus({status: "loading"}))
     try {
         const res = await todoAPI.deleteTodo(id)
-        dispatch(setTodos({todos:res.data.todos}))
+        dispatch(setTodos(res.data.todos))
     } catch (err) {
         const error = err as AxiosError
-        dispatch(setAppError({error: error.message}))
+        dispatch(setAppError(error.message))
         return rejectWithValue(null)
     } finally {
         dispatch(setAppStatus({status: "idle"}))
     }
 })
 
-export const updateTodoTC = createAsyncThunk("todo/updateTodo", async (params:UpdatedTodoType,{
+export const updateTodoTC = createAsyncThunk("todo/updateTodo", async (params: UpdatedTodoType, {
     dispatch,
     rejectWithValue
 }) => {
     dispatch(setAppStatus({status: "loading"}))
     try {
         const res = await todoAPI.updateTodo(params)
-        dispatch(setTodos({todos:res.data.todos}))
+        dispatch(setTodos(res.data.todos))
     } catch (err) {
         const error = err as AxiosError
-        dispatch(setAppError({error: error.message}))
+        dispatch(setAppError(error.message))
         return rejectWithValue(null)
     } finally {
         dispatch(setAppStatus({status: "idle"}))
@@ -77,24 +77,21 @@ export const updateTodoTC = createAsyncThunk("todo/updateTodo", async (params:Up
 })
 
 
-
 const slice = createSlice({
     name: "todo",
     initialState: {
-        todos: {} as TodoType[],
-        error: null as null | string
+        todos: [] as TodoType[],
+        todosTitle: "What to do?"
     },
     reducers: {
-        setTodos(state, action: PayloadAction<{ todos: TodoType[] }>) {
-            state.todos = action.payload.todos
-        }
-    },
-    extraReducers: (builder => {
-        builder.addCase(getTodosTC.fulfilled, (state, action) => {
+        setTodos(state, action: PayloadAction<TodoType[]>) {
             state.todos = action.payload
-        })
-    })
+        },
+        setTodosTitle(state, action: PayloadAction<string>) {
+            state.todosTitle = action.payload
+        },
+    }
 })
 
 export const todoReducer = slice.reducer
-export const {setTodos} = slice.actions
+export const {setTodos, setTodosTitle} = slice.actions

@@ -1,11 +1,10 @@
-import {todoAPI} from "./todoApi";
-
 export type {
     DeleteTodoResponseType,
     NewTodoType,
     AddTodoResponseType,
     UpdateTodoResponseType,
     UpdatedTodoType,
-    TodoType
+    TodoType,
+    GetTodosResponseType
 } from "./types"
 export {todoAPI} from "./todoApi"

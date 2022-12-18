@@ -2,16 +2,15 @@ import {AxiosResponse} from "axios";
 import {instance} from "./apiConfig";
 import {
     AddTodoResponseType,
-    DeleteTodoResponseType,
+    DeleteTodoResponseType, GetTodosResponseType,
     NewTodoType,
-    TodoType,
     UpdatedTodoType,
     UpdateTodoResponseType
 } from "./types";
 
 export const todoAPI = {
     getTodos() {
-        return instance.get<TodoType[]>("todos")
+        return instance.get<GetTodosResponseType>("todos")
     },
     addTodo: function (newTodo: NewTodoType) {
         return instance.post<NewTodoType, AxiosResponse<AddTodoResponseType>>("add-todo", newTodo)
