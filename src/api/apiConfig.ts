@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export const instance = axios.create({
-    baseURL: 'https://todolist-back.vercel.app/',
+    baseURL: process.env.REACT_APP_BASE_URL,
 })
 
